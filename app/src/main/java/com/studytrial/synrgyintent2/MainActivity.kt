@@ -6,25 +6,29 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),MainActivityContract {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        loadFragment(FragmentPart())
+        loadFragment(FragmentPart(this))
         btn_activity.setOnClickListener {
             var fragment = supportFragmentManager.findFragmentById(fl_container.id) as FragmentPart
             fragment.toastFragment()
         }
     }
 
-    fun toastActivity() {
-        Toast.makeText(this, "Dijalankan dari Activity", Toast.LENGTH_SHORT).show()
-    }
+//    fun toastActivity() {
+//        Toast.makeText(this, "Dijalankan dari Activity", Toast.LENGTH_SHORT).show()
+//    }
 
     private fun loadFragment(fragmentPart: FragmentPart) {
         supportFragmentManager.beginTransaction()
                 .replace(fl_container.id, fragmentPart)
                 .commit()
+    }
+
+    override fun showToast() {
+        Toast.makeText(this, "Dijalankan dari Activity", Toast.LENGTH_SHORT).show()
     }
 }
